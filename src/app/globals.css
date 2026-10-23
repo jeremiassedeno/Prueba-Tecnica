@@ -608,7 +608,8 @@ form input {
   margin-left: 6px;
   font-weight: 400;
 }
-.page-heading p {
+/* Solo el subtítulo: el diálogo de transferencia también se dibuja dentro de .page-heading. */
+.page-heading > div > p {
   font-size: 12px;
   color: var(--muted);
 }
@@ -697,7 +698,8 @@ form input {
   position: relative;
   z-index: 1;
 }
-.balance-bottom .primary {
+/* Solo el botón de la tarjeta, no los del diálogo que se dibuja a su lado. */
+.balance-bottom > .primary {
   padding: 10px 17px;
   font-size: 11px;
   min-height: 39px;
@@ -1552,7 +1554,7 @@ dialog > .muted {
     font-size: 27px;
     letter-spacing: -1px;
   }
-  .page-heading p {
+  .page-heading > div > p {
     font-size: 11px;
     line-height: 1.6;
     max-width: 240px;
