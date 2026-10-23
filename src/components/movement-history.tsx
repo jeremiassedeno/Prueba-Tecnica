@@ -8,6 +8,22 @@ import type { MovementItem } from "@/lib/movements";
 const PAGE_SIZE = 8;
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
+const TYPES = [
+  { value: "all", label: "Todos los tipos" },
+  { value: "income", label: "Ingresos" },
+  { value: "expense", label: "Egresos" },
+] as const;
+
+const PERIODS = [
+  { value: "all", label: "Todo el período", days: null },
+  { value: "7", label: "Últimos 7 días", days: 7 },
+  { value: "30", label: "Últimos 30 días", days: 30 },
+  { value: "90", label: "Últimos 90 días", days: 90 },
+] as const;
+
+type MovementType = (typeof TYPES)[number]["value"];
+type Period = (typeof PERIODS)[number];
+
 function escapeCsvCell(value: string) {
   // Evita que una planilla interprete el contenido como una fórmula.
   const prefix = /^[=+\-@\t\r]/.test(value) ? "'" : "";
@@ -15,15 +31,26 @@ function escapeCsvCell(value: string) {
   return `"${prefix}${escapedValue}"`;
 }
 
-export default function Movements({ items }: { items: MovementItem[] }) {
+export default function MovementHistory({ items }: { items: MovementItem[] }) {
   const [query, setQuery] = useState("");
-  const [type, setType] = useState("all");
-  const [period, setPeriod] = useState("all");
+  const [type, setType] = useState<MovementType>("all");
+  const [period, setPeriod] = useState<{ value: Period["value"]; since: number | null }>({
+    value: "all",
+    since: null,
+  });
   const [page, setPage] = useState(1);
+
+  function choosePeriod({ value, days }: Period) {
+    // La fecha de corte se fija al elegir el período, no en cada render.
+    setPeriod({
+      value,
+      since: days === null ? null : Date.now() - days * MILLISECONDS_PER_DAY,
+    });
+    setPage(1);
+  }
 
   const filteredMovements = useMemo(() => {
     const searchTerm = query.toLocaleLowerCase();
-    const periodStart = Date.now() - Number(period) * MILLISECONDS_PER_DAY;
 
     return items.filter((movement) => {
       const searchableText =
@@ -33,11 +60,11 @@ export default function Movements({ items }: { items: MovementItem[] }) {
         type === "all" ||
         (type === "income" ? movement.amountCents > 0 : movement.amountCents < 0);
       const matchesPeriod =
-        period === "all" || new Date(movement.createdAt).getTime() >= periodStart;
+        period.since === null || new Date(movement.createdAt).getTime() >= period.since;
 
       return matchesSearch && matchesType && matchesPeriod;
     });
-  }, [items, query, type, period]);
+  }, [items, query, type, period.since]);
 
   const totalPages = Math.max(1, Math.ceil(filteredMovements.length / PAGE_SIZE));
   // Tras una transferencia la lista se recarga y la página actual puede quedar fuera de rango.
@@ -60,7 +87,7 @@ export default function Movements({ items }: { items: MovementItem[] }) {
       ]),
     ];
     const csvContent = rows.map((row) => row.map(escapeCsvCell).join(";")).join("\r\n");
-    const csvFile = new Blob(["\uFEFF" + csvContent], {
+    const csvFile = new Blob(["﻿" + csvContent], {
       type: "text/csv;charset=utf-8;",
     });
     const url = URL.createObjectURL(csvFile);
@@ -90,26 +117,31 @@ export default function Movements({ items }: { items: MovementItem[] }) {
           aria-label="Filtrar por tipo"
           value={type}
           onChange={(e) => {
-            setType(e.target.value);
+            const option = TYPES.find(({ value }) => value === e.target.value);
+            if (!option) return;
+            setType(option.value);
             setPage(1);
           }}
         >
-          <option value="all">Todos los tipos</option>
-          <option value="income">Ingresos</option>
-          <option value="expense">Egresos</option>
+          {TYPES.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
         </select>
         <select
           aria-label="Filtrar por período"
-          value={period}
+          value={period.value}
           onChange={(e) => {
-            setPeriod(e.target.value);
-            setPage(1);
+            const option = PERIODS.find(({ value }) => value === e.target.value);
+            if (option) choosePeriod(option);
           }}
         >
-          <option value="all">Todo el período</option>
-          <option value="7">Últimos 7 días</option>
-          <option value="30">Últimos 30 días</option>
-          <option value="90">Últimos 90 días</option>
+          {PERIODS.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
         </select>
         <button
           className="secondary export-button"
