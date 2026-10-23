@@ -173,11 +173,6 @@
   padding: var(--space-6) var(--space-6);
   overflow: hidden;
 }
-.daily-card .eyebrow {
-  font-size: var(--text-2xs);
-  letter-spacing: 1.1px;
-  color: var(--color-brand-600);
-}
 .daily-card h2 {
   font-size: var(--text-3xl);
   line-height: 1.35;
@@ -289,9 +284,6 @@
   }
   .steps-art {
     display: none;
-  }
-  .daily-card .eyebrow {
-    font-size: var(--text-2xs);
   }
   .overview-grid {
     gap: var(--space-4);

@@ -20,7 +20,7 @@ export default async function LoginPage({
         <div className="story-content">
           <span className="eyebrow">MÁS SIMPLE. MÁS LANÚS.</span>
           <h1>
-            Tu plata. <br />
+            Tu dinero. <br />
             Tus planes.
             <br />
             <em>Tu próximo paso.</em>

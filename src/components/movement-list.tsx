@@ -41,7 +41,6 @@ export default function MovementList({
               </span>
               <span>
                 <strong>{item.counterparty}</strong>
-                <small>{item.description}</small>
               </span>
             </span>
             <span className="movement-date">{date(item.createdAt)}</span>

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Search, Download, ChevronLeft, ChevronRight } from "lucide-react";
 import MovementList from "@/components/movement-list";
-import type { MovementItem } from "@/lib/movements";
+import { movementKind, type MovementItem } from "@/lib/movements";
 
 const PAGE_SIZE = 8;
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
@@ -12,6 +12,7 @@ const TYPES = [
   { value: "all", label: "Todos los tipos" },
   { value: "income", label: "Ingresos" },
   { value: "expense", label: "Egresos" },
+  { value: "subscription", label: "Suscripciones" },
 ] as const;
 
 const PERIODS = [
@@ -56,7 +57,9 @@ export default function MovementHistory({ items }: { items: MovementItem[] }) {
       const matchesSearch = searchableText.includes(searchTerm);
       const matchesType =
         type === "all" ||
-        (type === "income" ? movement.amountCents > 0 : movement.amountCents < 0);
+        (type === "income" && movement.amountCents > 0) ||
+        (type === "expense" && movement.amountCents < 0) ||
+        (type === "subscription" && movementKind(movement).className === "subscription");
       const matchesPeriod =
         period.since === null || new Date(movement.createdAt).getTime() >= period.since;
 

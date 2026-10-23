@@ -50,7 +50,6 @@ export default async function Home() {
               ✳
             </span>
           </h1>
-          <p>Un nuevo día para hacer eso que tenés en mente.</p>
         </div>
         <span className="date-badge">{dayAndMonth(now)}</span>
       </div>
@@ -70,7 +69,7 @@ export default async function Home() {
         </section>
         <section className="month-card">
           <div className="card-heading">
-            <h2>Tu mes, en números</h2>
+            <h2>Resumen Mensual</h2>
             <span className="month-name">{monthAndYear(now)}</span>
           </div>
           <div className="monthly-stat">
@@ -100,7 +99,6 @@ export default async function Home() {
           <div className="section-heading">
             <div>
               <h2>Últimos movimientos</h2>
-              <p>Lo que pasa con tu plata, siempre a mano.</p>
             </div>
             <Link href="/movimientos">
               Ver todos <ArrowRight size={16} />
@@ -113,7 +111,6 @@ export default async function Home() {
         </section>
         <aside className="home-side">
           <div className="daily-card">
-            <span className="eyebrow">MENOS VUELTAS, MÁS PLANES</span>
             <h2>
               Tu próximo paso
               <br />
@@ -128,7 +125,7 @@ export default async function Home() {
             <p>
               Transferí en segundos.
               <br />
-              Seguí con lo que te mueve.
+              Seguí con tu pasión.
             </p>
             <Link href="/movimientos">
               Explorá tus movimientos <ArrowUpRight size={17} />

@@ -6,7 +6,6 @@ import {
   LayoutDashboard,
   ArrowLeftRight,
   LogOut,
-  ShieldCheck,
   ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
@@ -61,19 +60,14 @@ export default function Shell({
         </nav>
         <div className="sidebar-bottom">
           <div className="sidebar-message">
-            <div className="little-flower" aria-hidden="true">
-              ✳
-            </div>
             <strong>
-              Lo que viene,
+              Banco
               <br />
-              lo hacés vos.
+              Granate
             </strong>
-            <p>Nosotros te acompañamos.</p>
+            <p>Siempre acompañando.</p>
           </div>
-          <div className="sidebar-security">
-            <ShieldCheck size={16} /> Entorno de demostración
-          </div>
+
           <button className="logout" onClick={logout}>
             <LogOut size={18} /> Cerrar sesión
           </button>
@@ -102,12 +96,6 @@ export default function Shell({
           </div>
         </header>
         {children}
-        <footer className="app-footer">
-          <span>
-            GranaBank <span>Tu banco, a tu ritmo.</span>
-          </span>
-          <span>Proyecto de demostración · Sin dinero real</span>
-        </footer>
       </div>
     </div>
   );

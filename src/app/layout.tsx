@@ -6,9 +6,8 @@ const sans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
 const display = Manrope({ subsets: ["latin"], variable: "--font-display" });
 
 export const metadata: Metadata = {
-  title: "GranaBank · Tu banco, a tu ritmo",
-  description:
-    "Home banking de demostración. Consultá tu saldo, transferí y seguí tus movimientos.",
+  title: "GranaBank",
+  description: "Home banking. Consultá tu saldo, transferí y seguí tus movimientos.",
 };
 export default function RootLayout({
   children,

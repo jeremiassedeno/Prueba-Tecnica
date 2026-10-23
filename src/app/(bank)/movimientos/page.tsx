@@ -14,7 +14,6 @@ export default async function MovementsPage() {
     <main className="page-content">
       <div className="page-heading">
         <div>
-          <span className="mini-label">CADA PASO CUENTA</span>
           <h1>Tus movimientos</h1>
           <p>Consultá, buscá y llevá el control de tu actividad.</p>
         </div>

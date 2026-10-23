@@ -66,15 +66,10 @@
   padding-top: var(--space-10);
 }
 .sidebar-message {
-  padding: var(--space-6) var(--space-4) var(--space-5);
+  padding: var(--space-4);
   border-radius: var(--radius-md);
   background: var(--color-background);
   margin-bottom: var(--space-6);
-}
-.little-flower {
-  color: var(--color-brand-300);
-  font-size: var(--text-6xl);
-  margin-bottom: var(--space-3);
 }
 .sidebar-message strong {
   font-family: var(--font-display), sans-serif;
@@ -86,14 +81,6 @@
   font-size: var(--text-xs);
   color: var(--color-text-muted);
   margin-top: var(--space-2);
-}
-.sidebar-security {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  padding: var(--space-1) var(--space-1) var(--space-6);
 }
 .logout {
   background: none;
@@ -215,11 +202,6 @@
   letter-spacing: -0.3px;
   font-weight: 750;
 }
-.section-heading p {
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  margin-top: var(--space-2);
-}
 .section-heading a {
   display: flex;
   align-items: center;
@@ -227,31 +209,6 @@
   color: var(--color-brand-700);
   font-size: var(--text-xs);
   white-space: nowrap;
-}
-.app-footer {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 var(--space-11);
-  padding: var(--space-5) 0 var(--space-6);
-  border-top: 1px solid var(--color-border);
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  gap: var(--space-4);
-}
-.app-footer > span:first-child {
-  font-size: var(--text-lg);
-  color: var(--color-text-muted);
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-.app-footer > span:first-child > span {
-  font-size: var(--text-xs);
-  font-weight: 400;
-  letter-spacing: 0;
-  margin-left: var(--space-3);
-}
-.app-footer > span:last-child {
-  align-self: center;
 }
 @media (min-width: 1500px) {
   .page-content {
@@ -270,9 +227,6 @@
   }
   .topbar {
     padding: 0 var(--space-8);
-  }
-  .app-footer {
-    margin: 0 var(--space-8);
   }
 }
 @media (max-width: 960px) {
@@ -301,8 +255,7 @@
     font-size: var(--text-3xl);
   }
   .nav-caption,
-  .sidebar-message,
-  .sidebar-security {
+  .sidebar-message {
     display: none;
   }
   .sidebar nav {
@@ -382,22 +335,8 @@
   .section-heading h2 {
     font-size: var(--text-lg);
   }
-  .section-heading p {
-    font-size: var(--text-xs);
-  }
   .section-heading a {
     font-size: var(--text-xs);
-  }
-  .app-footer {
-    margin: 0 var(--space-5);
-    gap: var(--space-3);
-    padding: var(--space-5) 0;
-  }
-  .app-footer > span:last-child {
-    font-size: var(--text-xs);
-  }
-  .app-footer > span:first-child > span {
-    display: none;
   }
   .page-heading > .primary {
     font-size: var(--text-xs);
