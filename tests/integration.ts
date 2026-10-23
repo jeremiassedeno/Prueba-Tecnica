@@ -5,9 +5,9 @@ import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 
-// Ejecutar con la app local iniciada: npx tsx tests/integration.ts.
+// Ejecutar con la app local iniciada en APP_URL: npm run test:integration.
 // Crea cuentas exclusivas para esta ejecución y las elimina al terminar.
-const origin = "http://localhost:3000";
+const origin = new URL(process.env.APP_URL ?? "http://localhost:3000").origin;
 const databaseUrl = process.env.DATABASE_URL ?? "";
 assert.match(
   databaseUrl,
