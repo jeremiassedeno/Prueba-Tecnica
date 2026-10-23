@@ -1,6 +1,5 @@
 "use client";
 import { useEffect } from "react";
-import Link from "next/link";
 
 export default function ErrorPage({
   error,
@@ -23,7 +22,9 @@ export default function ErrorPage({
       <button className="primary" onClick={() => retry()}>
         Reintentar
       </button>
-      <Link href="/inicio">Ir al inicio</Link>
+      {/* Navegación completa a propósito: con <Link>, si el error ocurrió en /inicio la ruta
+          no cambia y Next no reinicia esta pantalla aunque el servidor ya responda bien. */}
+      <a href="/inicio">Ir al inicio</a>
     </main>
   );
 }
