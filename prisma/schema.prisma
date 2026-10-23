@@ -41,6 +41,8 @@ model Account {
   balanceCents BigInt     @default(0)
   user         User       @relation(fields: [userId], references: [id])
   movements    Movement[]
+  sent         Transfer[] @relation("SentTransfers")
+  received     Transfer[] @relation("ReceivedTransfers")
 }
 
 model Movement {
@@ -63,4 +65,9 @@ model Transfer {
   recipientId String
   amountCents BigInt
   createdAt   DateTime @default(now())
+  sender      Account  @relation("SentTransfers", fields: [senderId], references: [id])
+  recipient   Account  @relation("ReceivedTransfers", fields: [recipientId], references: [id])
+
+  @@index([senderId])
+  @@index([recipientId])
 }
