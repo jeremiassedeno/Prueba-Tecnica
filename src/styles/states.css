@@ -1,0 +1,40 @@
+.error-page {
+  max-width: 600px;
+  margin: 18vh auto;
+  padding: 30px;
+  text-align: center;
+}
+.error-page h1 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+.error-page p {
+  color: var(--muted);
+  margin: 20px 0;
+}
+.error-page a:not(.primary) {
+  display: block;
+  margin-top: 20px;
+}
+.skeleton {
+  background: linear-gradient(90deg, #f4ecee, #fcf7f9, #f4ecee);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+.heading-skeleton {
+  height: 90px;
+  width: 65%;
+}
+.card-skeleton {
+  height: 240px;
+}
+.table-skeleton {
+  height: 350px;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}

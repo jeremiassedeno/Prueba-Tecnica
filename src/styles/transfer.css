@@ -1,0 +1,64 @@
+dialog {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  width: min(460px, calc(100vw - 32px));
+  padding: 28px;
+  box-shadow: 0 25px 100px #2b111930;
+  color: var(--ink);
+  max-height: 90dvh;
+}
+dialog::backdrop {
+  background: #2f151d66;
+  backdrop-filter: blur(5px);
+}
+.modal-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+dialog h2 {
+  font-size: 25px;
+  letter-spacing: -0.8px;
+  margin-bottom: 8px;
+}
+dialog > .muted {
+  font-size: 12px;
+}
+.form-help {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 20px 0;
+}
+.transfer-success {
+  text-align: center;
+  padding: 20px 0;
+}
+.transfer-success > div {
+  background: #e3f3e9;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  color: var(--green);
+  margin: 0 auto 23px;
+}
+.transfer-amount {
+  display: block;
+  font-family: var(--font-display), sans-serif;
+  font-size: 30px;
+  letter-spacing: -1px;
+  margin: 10px 0 6px;
+}
+.transfer-success p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 13px;
+}
+.transfer-success .reference {
+  font-size: 11px;
+  margin: 15px 0 25px;
+  overflow-wrap: anywhere;
+}

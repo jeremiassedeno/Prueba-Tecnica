@@ -1,0 +1,367 @@
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 22px;
+  margin-bottom: 29px;
+}
+.balance-card {
+  padding: 24px 27px;
+  background: linear-gradient(120deg, #f5e9ed, #eddae2);
+  border: 1px solid #e8cfd9;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.balance-card:after {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -70px;
+  width: 230px;
+  height: 230px;
+  border: 1px solid #dec0cc;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 25px #ebd5de44,
+    0 0 0 50px #ebd5de33;
+  pointer-events: none;
+}
+.card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11px;
+  color: #766067;
+  position: relative;
+  z-index: 1;
+}
+.account-dot {
+  background: #c68699;
+  margin-right: 7px;
+}
+.balance-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  color: #756067;
+  margin-top: 26px;
+}
+.balance-label .icon-button {
+  padding: 0;
+}
+.balance-amount {
+  font-size: clamp(26px, 2.8vw, 39px);
+  font-weight: 700;
+  letter-spacing: -1.4px;
+  position: relative;
+  z-index: 1;
+  margin: 6px 0 28px;
+  white-space: nowrap;
+}
+.balance-amount > span {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+  margin-left: 12px;
+  color: #736066;
+}
+.balance-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+/* Solo el botón de la tarjeta, no los del diálogo que se dibuja a su lado. */
+.balance-bottom > .primary {
+  padding: 10px 17px;
+  font-size: 11px;
+  min-height: 39px;
+}
+.alias-copy {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  color: #745f65;
+  font-size: 11px;
+  background: transparent;
+  padding: 0;
+}
+.alias-copy strong {
+  color: #7a5f67;
+  font-weight: 500;
+}
+.alias-copy > span {
+  font-size: 11px;
+}
+.month-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+}
+.card-heading h2 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--ink);
+}
+.month-name {
+  font-size: 11px;
+}
+.monthly-stat {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 29px;
+}
+.monthly-stat small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+.monthly-stat strong {
+  display: block;
+  font-size: 19px;
+  letter-spacing: -0.4px;
+  font-weight: 550;
+}
+.stat-line {
+  width: 52px;
+  height: 22px;
+  margin-left: auto;
+  clip-path: polygon(
+    0 75%,
+    22% 48%,
+    39% 64%,
+    57% 23%,
+    76% 38%,
+    100% 0,
+    100% 13%,
+    76% 52%,
+    57% 37%,
+    39% 78%,
+    22% 62%,
+    0 89%
+  );
+}
+.income-line {
+  background: #90b5a5;
+}
+.expense-line {
+  background: #dca2b3;
+  transform: scaleY(-1);
+}
+.detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 255px;
+  gap: 24px;
+}
+.home-side {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.daily-card {
+  background: #f0e5e8;
+  border: 1px solid #e7d5dc;
+  border-radius: 13px;
+  padding: 25px 23px;
+  overflow: hidden;
+}
+.daily-card .eyebrow {
+  font-size: 10px;
+  letter-spacing: 1.1px;
+  color: #86596b;
+}
+.daily-card h2 {
+  font-size: 23px;
+  line-height: 1.35;
+  letter-spacing: -0.8px;
+  margin-top: 15px;
+  color: #60243a;
+}
+.daily-card > p {
+  font-size: 11px;
+  line-height: 1.9;
+  color: #7a5a68;
+  margin-top: 8px;
+}
+.daily-card > a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  margin-top: 18px;
+  color: #7a1838;
+}
+.steps-art {
+  position: relative;
+  height: 96px;
+  margin: 5px 0 10px;
+}
+.steps-art > span {
+  position: absolute;
+  bottom: 0;
+  width: 48px;
+  transform: skewY(-15deg);
+}
+.steps-art > span:nth-child(1) {
+  height: 25px;
+  left: 16px;
+  background: #dfbdca;
+}
+.steps-art > span:nth-child(2) {
+  height: 48px;
+  left: 64px;
+  background: #c58ba0;
+}
+.steps-art > span:nth-child(3) {
+  height: 73px;
+  left: 112px;
+  background: #a85b76;
+}
+.steps-art > svg {
+  position: absolute;
+  right: 4px;
+  top: 6px;
+  color: #7a1838;
+  width: 40px;
+  height: 40px;
+  stroke-width: 1.3;
+}
+@media (min-width: 1500px) {
+  .overview-grid {
+    margin-bottom: 35px;
+  }
+  .balance-card,
+  .month-card {
+    padding: 30px;
+  }
+}
+@media (max-width: 1200px) {
+  .detail-grid {
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 18px;
+  }
+  .balance-card {
+    padding: 22px;
+  }
+  .month-card {
+    padding: 22px 18px;
+  }
+  .month-card .card-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .monthly-stat {
+    margin-top: 22px;
+  }
+  .stat-line {
+    display: none;
+  }
+  .balance-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 17px;
+  }
+  .balance-amount {
+    margin-bottom: 22px;
+  }
+  .monthly-stat strong {
+    font-size: 20px;
+  }
+}
+@media (max-width: 960px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .daily-card {
+    padding: 20px;
+  }
+  .daily-card h2 {
+    font-size: 21px;
+  }
+  .steps-art {
+    display: none;
+  }
+  .daily-card .eyebrow {
+    font-size: 10px;
+  }
+  .overview-grid {
+    gap: 15px;
+    grid-template-columns: 1.2fr 1fr;
+  }
+  .balance-amount {
+    font-size: 29px;
+  }
+  .balance-amount > span {
+    display: none;
+  }
+  .card-heading {
+    font-size: 11px;
+  }
+}
+@media (max-width: 700px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 22px;
+  }
+  .balance-card {
+    padding: 23px;
+  }
+  .balance-amount {
+    font-size: 36px;
+    margin-bottom: 25px;
+  }
+  .balance-amount > span {
+    display: inline;
+    font-size: 11px;
+  }
+  .balance-bottom {
+    flex-direction: row;
+    align-items: center;
+  }
+  .month-card {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 15px;
+  }
+  .month-card .card-heading {
+    grid-column: 1/-1;
+    flex-direction: row;
+    align-items: center;
+  }
+  .monthly-stat {
+    margin-top: 23px;
+    gap: 10px;
+  }
+  .monthly-stat strong {
+    font-size: 17px;
+  }
+  .monthly-stat small {
+    font-size: 11px;
+  }
+  .monthly-stat .movement-icon {
+    width: 31px;
+    height: 31px;
+    border-radius: 9px;
+  }
+  .daily-card h2 {
+    font-size: 19px;
+  }
+  .daily-card {
+    padding: 19px 16px;
+  }
+  .daily-card > a {
+    font-size: 11px;
+    gap: 3px;
+  }
+}
