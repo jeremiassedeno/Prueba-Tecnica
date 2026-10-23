@@ -2,7 +2,12 @@ import Link from "next/link";
 import { ArrowUpRight, ShieldCheck } from "lucide-react";
 import LoginForm from "@/components/login-form";
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { sesion } = await searchParams;
   return (
     <main className="login-page">
       <section className="login-story">
@@ -51,6 +56,11 @@ export default function LoginPage() {
           </span>
         </div>
         <div className="login-form-wrap">
+          {sesion === "vencida" && (
+            <div className="notice" role="status">
+              Tu sesión venció por inactividad. Por seguridad, ingresá nuevamente.
+            </div>
+          )}
           <span className="mini-label">QUÉ BUENO VERTE</span>
           <h2>
             Hola de nuevo<span>.</span>

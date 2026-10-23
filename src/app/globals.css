@@ -356,6 +356,16 @@ form input {
   margin: auto;
   padding: 60px 0;
 }
+.notice {
+  color: var(--brand);
+  background: var(--brand-soft);
+  border: 1px solid #ecd3dc;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
 .login-form-wrap h2 {
   font-size: 36px;
   letter-spacing: -1.4px;

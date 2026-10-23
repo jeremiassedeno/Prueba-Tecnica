@@ -52,30 +52,45 @@ async function main() {
       accounts.push(user.account!.id);
       emails.push(email);
     }
-    const checkPrivateRoutes = async (cookie = "") => {
+    const page = (path: string, cookie: string) =>
+      fetch(origin + path, { redirect: "manual", headers: { Cookie: cookie } });
+    const checkPrivateRoutes = async (cookie: string, location: string) => {
       for (const path of ["/inicio", "/movimientos"]) {
-        const response = await fetch(origin + path, {
-          redirect: "manual",
-          headers: { Cookie: cookie },
-        });
+        const response = await page(path, cookie);
         assert.equal(response.status, 307);
-        assert.equal(response.headers.get("location"), "/login");
+        assert.equal(response.headers.get("location"), location);
       }
     };
-    await checkPrivateRoutes();
-    await checkPrivateRoutes("granabank_session=invalid-token");
-    const expiredToken = randomUUID();
-    await prisma.session.create({
-      data: {
-        id: createHash("sha256").update(expiredToken).digest("hex"),
-        userId: users[0],
-        expiresAt: new Date(Date.now() - 60000),
-      },
-    });
-    await checkPrivateRoutes(`granabank_session=${expiredToken}`);
+    // Sesiones creadas directamente en la base, con la antigüedad y el vencimiento indicados.
+    const MINUTE = 60_000;
+    const testSession = async (startedAgo: number, expiresIn: number) => {
+      const token = randomUUID();
+      const id = createHash("sha256").update(token).digest("hex");
+      const createdAt = new Date(Date.now() - startedAgo);
+      const expiresAt = new Date(Date.now() + expiresIn);
+      await prisma.session.create({
+        data: { id, userId: users[0], createdAt, expiresAt },
+      });
+      return { id, createdAt, cookie: `granabank_session=${token}` };
+    };
+    const sessionExpiry = async (id: string) =>
+      (await prisma.session.findUniqueOrThrow({ where: { id } })).expiresAt.getTime();
+    await checkPrivateRoutes("", "/login");
+    await checkPrivateRoutes("granabank_session=invalid-token", "/login?sesion=vencida");
+    // Vencida por inactividad hace un minuto.
+    const expired = await testSession(20 * MINUTE, -MINUTE);
+    await checkPrivateRoutes(expired.cookie, "/login?sesion=vencida");
+    assert.equal((await post("/api/transfers", {}, expired.cookie)).status, 401);
+    // Con actividad, el vencimiento se corre a 15 minutos desde ahora...
+    const active = await testSession(10 * MINUTE, 5 * MINUTE);
+    assert.equal((await page("/inicio", active.cookie)).status, 200);
+    assert.ok((await sessionExpiry(active.id)) > Date.now() + 14 * MINUTE);
+    // ...pero nunca más allá de 8 horas desde el login.
+    const longLived = await testSession(8 * 60 * MINUTE - 2 * MINUTE, MINUTE);
+    assert.equal((await page("/inicio", longLived.cookie)).status, 200);
     assert.equal(
-      (await post("/api/transfers", {}, `granabank_session=${expiredToken}`)).status,
-      401,
+      await sessionExpiry(longLived.id),
+      longLived.createdAt.getTime() + 8 * 60 * MINUTE,
     );
     assert.equal((await post("/api/transfers", {})).status, 401);
     assert.equal(
@@ -98,13 +113,11 @@ async function main() {
     const cookieHeader = login.headers.get("set-cookie")!;
     assert.match(cookieHeader, /HttpOnly/i);
     assert.match(cookieHeader, /SameSite=lax/i);
+    // Cookie de sesión: sin vencimiento propio, el navegador la borra al cerrarse.
+    assert.doesNotMatch(cookieHeader, /Expires|Max-Age/i);
     const cookie = cookieHeader.split(";")[0];
     for (const path of ["/inicio", "/movimientos"])
-      assert.equal(
-        (await fetch(origin + path, { redirect: "manual", headers: { Cookie: cookie } }))
-          .status,
-        200,
-      );
+      assert.equal((await page(path, cookie)).status, 200);
     const requestId = randomUUID();
     const transfer = {
       recipient: `receiver-${suffix}`,
@@ -215,7 +228,7 @@ async function main() {
       2_147_484_000n,
     );
     assert.equal((await post("/api/auth/logout", {}, cookie)).status, 200);
-    await checkPrivateRoutes(cookie);
+    await checkPrivateRoutes(cookie, "/login?sesion=vencida");
     assert.equal((await post("/api/transfers", transfer, cookie)).status, 401);
     for (let i = 0; i < 10; i++)
       assert.equal(
@@ -227,7 +240,7 @@ async function main() {
       429,
     );
     console.log(
-      "OK: rutas privadas, login, cookies, origen, transferencia, idempotencia, historial, detalle, saldo insuficiente, montos grandes, concurrencia, conservación de saldo, logout y límite de intentos.",
+      "OK: rutas privadas, vencimiento de sesión, login, cookies, origen, transferencia, idempotencia, historial, detalle, saldo insuficiente, montos grandes, concurrencia, conservación de saldo, logout y límite de intentos.",
     );
   } finally {
     await prisma.movement.deleteMany({ where: { accountId: { in: accounts } } });
