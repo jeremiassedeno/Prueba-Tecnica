@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: granabank
+      POSTGRES_PASSWORD: granabank_local
+      POSTGRES_DB: granabank
+    ports:
+      - "5432:5432"
+    volumes:
+      - granabank_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U granabank -d granabank"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  granabank_data:
