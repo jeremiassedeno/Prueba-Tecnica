@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
+import { Prisma } from "@/generated/prisma/client";
 import { currentUser, sameOrigin } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { transferSchema } from "@/lib/validation";
+
+class InsufficientFundsError extends Error {}
 
 export async function POST(request: Request) {
   if (!sameOrigin(request))
@@ -49,7 +52,7 @@ export async function POST(request: Request) {
         where: { id: sender.id, balanceCents: { gte: amount } },
         data: { balanceCents: { decrement: amount } },
       });
-      if (!updated.count) throw new Error("INSUFFICIENT_FUNDS");
+      if (!updated.count) throw new InsufficientFundsError();
       await tx.account.update({
         where: { id: destination.id },
         data: { balanceCents: { increment: amount } },
@@ -82,12 +85,13 @@ export async function POST(request: Request) {
       amount,
     });
   } catch (error) {
-    if (error instanceof Error && error.message === "INSUFFICIENT_FUNDS")
+    if (error instanceof InsufficientFundsError)
       return NextResponse.json(
         { error: "Tu saldo es insuficiente para esta transferencia." },
         { status: 400 },
       );
-    if (error && typeof error === "object" && "code" in error && error.code === "P2002")
+    // P2002: ya existe una transferencia con este requestId.
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002")
       return NextResponse.json(
         {
           error:

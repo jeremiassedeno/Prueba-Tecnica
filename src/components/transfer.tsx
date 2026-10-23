@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { ArrowUpRight, X, Check, LoaderCircle } from "lucide-react";
 import { money } from "@/lib/format";
 
+type Receipt = { recipient: string; amount: number; reference: string };
+
 export default function Transfer({ balance }: { balance: number }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const router = useRouter();
@@ -11,9 +13,7 @@ export default function Transfer({ balance }: { balance: number }) {
   const requestId = useRef("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState<{ recipient: string; amount: number } | null>(
-    null,
-  );
+  const [success, setSuccess] = useState<Receipt | null>(null);
 
   function open() {
     requestId.current = crypto.randomUUID();
@@ -34,7 +34,11 @@ export default function Transfer({ balance }: { balance: number }) {
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
-      setSuccess({ recipient: data.recipient, amount: data.amount });
+      setSuccess({
+        recipient: data.recipient,
+        amount: data.amount,
+        reference: data.reference,
+      });
       router.refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Hubo un problema de conexión.");
@@ -75,7 +79,7 @@ export default function Transfer({ balance }: { balance: number }) {
             <h2 id="transfer-title">¡Transferencia realizada!</h2>
             <strong className="transfer-amount">{money(success.amount)}</strong>
             <p>El dinero ya está en la cuenta de {success.recipient}.</p>
-            <p className="reference">Referencia: {requestId.current}</p>
+            <p className="reference">Referencia: {success.reference}</p>
             <button className="primary" onClick={() => dialog.current?.close()}>
               Listo
             </button>
