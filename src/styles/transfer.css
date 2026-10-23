@@ -1,64 +1,64 @@
 dialog {
-  border: 1px solid var(--line);
-  border-radius: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
   width: min(460px, calc(100vw - 32px));
-  padding: 28px;
-  box-shadow: 0 25px 100px #2b111930;
-  color: var(--ink);
+  padding: var(--space-7);
+  box-shadow: 0 25px 100px color-mix(in srgb, var(--color-text) 19%, transparent);
+  color: var(--color-text);
   max-height: 90dvh;
 }
 dialog::backdrop {
-  background: #2f151d66;
+  background: color-mix(in srgb, var(--color-text) 40%, transparent);
   backdrop-filter: blur(5px);
 }
 .modal-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
 }
 dialog h2 {
-  font-size: 25px;
+  font-size: var(--text-3xl);
   letter-spacing: -0.8px;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-2);
 }
 dialog > .muted {
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 .form-help {
-  font-size: 11px;
+  font-size: var(--text-xs);
   line-height: 1.6;
-  color: var(--muted);
-  margin: 20px 0;
+  color: var(--color-text-muted);
+  margin: var(--space-5) 0;
 }
 .transfer-success {
   text-align: center;
-  padding: 20px 0;
+  padding: var(--space-5) 0;
 }
 .transfer-success > div {
-  background: #e3f3e9;
+  background: var(--color-success-soft);
   border-radius: 50%;
   width: 64px;
   height: 64px;
   display: grid;
   place-items: center;
-  color: var(--green);
-  margin: 0 auto 23px;
+  color: var(--color-success);
+  margin: 0 auto var(--space-6);
 }
 .transfer-amount {
   display: block;
   font-family: var(--font-display), sans-serif;
-  font-size: 30px;
+  font-size: var(--text-5xl);
   letter-spacing: -1px;
-  margin: 10px 0 6px;
+  margin: var(--space-3) 0 var(--space-2);
 }
 .transfer-success p {
-  color: var(--muted);
+  color: var(--color-text-muted);
   line-height: 1.7;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 .transfer-success .reference {
-  font-size: 11px;
-  margin: 15px 0 25px;
+  font-size: var(--text-xs);
+  margin: var(--space-4) 0 var(--space-6);
   overflow-wrap: anywhere;
 }

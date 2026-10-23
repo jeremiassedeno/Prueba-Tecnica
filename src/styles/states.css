@@ -1,27 +1,32 @@
 .error-page {
   max-width: 600px;
   margin: 18vh auto;
-  padding: 30px;
+  padding: var(--space-8);
   text-align: center;
 }
 .error-page h1 {
-  font-size: 30px;
-  margin-bottom: 20px;
+  font-size: var(--text-5xl);
+  margin-bottom: var(--space-5);
 }
 .error-page p {
-  color: var(--muted);
-  margin: 20px 0;
+  color: var(--color-text-muted);
+  margin: var(--space-5) 0;
 }
 .error-page a:not(.primary) {
   display: block;
-  margin-top: 20px;
+  margin-top: var(--space-5);
 }
 .skeleton {
-  background: linear-gradient(90deg, #f4ecee, #fcf7f9, #f4ecee);
+  background: linear-gradient(
+    90deg,
+    var(--color-brand-100),
+    var(--color-brand-50),
+    var(--color-brand-100)
+  );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
-  border-radius: 12px;
-  margin-bottom: 25px;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
 }
 .heading-skeleton {
   height: 90px;

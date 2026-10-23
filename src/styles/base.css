@@ -4,9 +4,9 @@
 body {
   margin: 0;
   font-family: var(--font-sans), sans-serif;
-  color: var(--ink);
-  background: var(--background);
-  font-size: 14px;
+  color: var(--color-text);
+  background: var(--color-background);
+  font-size: var(--text-base);
 }
 button,
 input,
@@ -58,30 +58,30 @@ select {
 }
 button:focus-visible,
 a:focus-visible {
-  outline: 3px solid #e99bb2;
+  outline: 3px solid var(--color-focus);
 }
 input,
 select {
-  border: 1px solid #dfe1e8;
-  border-radius: 9px;
-  background: white;
-  color: var(--ink);
-  padding: 13px 15px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: var(--space-3) var(--space-4);
   min-width: 0;
 }
 input:focus,
 select:focus {
-  outline: 2px solid #eda9bd;
-  border-color: var(--brand);
+  outline: 2px solid var(--color-focus);
+  border-color: var(--color-brand-700);
 }
 input::placeholder {
-  color: #857f86;
+  color: var(--color-text-subtle);
 }
 form label {
   display: block;
-  margin: 23px 0 9px;
+  margin: var(--space-6) 0 var(--space-2);
   font-weight: 600;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 form input {
   width: 100%;
@@ -92,9 +92,9 @@ form input {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  border-radius: 9px;
-  padding: 13px 20px;
+  gap: var(--space-3);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-5);
   font-weight: 600;
   min-height: 45px;
   transition:
@@ -102,38 +102,38 @@ form input {
     transform 0.2s;
 }
 .primary {
-  background: var(--brand);
-  color: white;
+  background: var(--color-brand-700);
+  color: var(--color-text-inverse);
 }
 .primary:hover {
-  background: var(--brand-dark);
+  background: var(--color-brand-800);
   transform: translateY(-1px);
 }
 .secondary {
-  background: #fff;
-  border: 1px solid var(--line);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
 }
 .secondary:hover {
-  background: var(--background);
+  background: var(--color-background);
 }
 .full {
   width: 100%;
 }
 .muted {
-  color: var(--muted);
+  color: var(--color-text-muted);
   line-height: 1.7;
 }
 .mini-label,
 .eyebrow {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   font-weight: 700;
   letter-spacing: 1.8px;
 }
 .mini-label {
-  color: var(--brand);
+  color: var(--color-brand-700);
 }
 .brand {
-  font-size: 27px;
+  font-size: var(--text-4xl);
   letter-spacing: -1.2px;
   display: flex;
   align-items: center;
@@ -145,10 +145,10 @@ form input {
   place-items: center;
   width: 33px;
   height: 33px;
-  border-radius: 10px;
-  background: var(--brand);
-  color: #fff;
-  margin-right: 9px;
+  border-radius: var(--radius-md);
+  background: var(--color-brand-700);
+  color: var(--color-text-inverse);
+  margin-right: var(--space-2);
 }
 .brand-mark svg {
   width: 26px;
@@ -158,23 +158,23 @@ form input {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 7px;
-  border-radius: 7px;
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
   background: transparent;
   color: inherit;
 }
 .icon-button:hover {
-  background: #00000008;
+  background: color-mix(in srgb, var(--color-text) 4%, transparent);
 }
 .error-message {
-  color: #ac3540;
-  background: #fff0f0;
-  border: 1px solid #f5d5d9;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 13px;
+  color: var(--color-danger);
+  background: var(--color-danger-soft);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  font-size: var(--text-md);
   line-height: 1.5;
-  margin: 15px 0;
+  margin: var(--space-4) 0;
 }
 .spin {
   animation: spin 1s linear infinite;
@@ -185,18 +185,18 @@ form input {
   }
 }
 .notice {
-  color: var(--brand);
-  background: var(--brand-soft);
-  border: 1px solid #ecd3dc;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 13px;
+  color: var(--color-brand-700);
+  background: var(--color-brand-100);
+  border: 1px solid var(--color-brand-200);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  font-size: var(--text-md);
   line-height: 1.5;
-  margin-bottom: 28px;
+  margin-bottom: var(--space-7);
 }
 @media (max-width: 700px) {
   .mini-label {
-    font-size: 10px;
+    font-size: var(--text-2xs);
   }
 }
 @media (prefers-reduced-motion: reduce) {

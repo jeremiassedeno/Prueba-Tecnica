@@ -2,11 +2,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 100dvh;
-  background: #fff;
+  background: var(--color-surface);
 }
 .login-story {
-  background: #f1e3e8;
-  padding: 42px 64px 26px;
+  background: var(--color-brand-100);
+  padding: var(--space-11) var(--space-16) var(--space-7);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -15,31 +15,32 @@
 .story-content {
   max-width: 510px;
   width: 100%;
-  margin: 65px auto 0;
+  margin: var(--space-16) auto 0;
 }
 .story-content .eyebrow {
-  color: #8a5867;
+  color: var(--color-brand-600);
 }
 .story-content h1 {
-  font-size: clamp(40px, 4.2vw, 66px);
+  font-size: var(--text-display);
   line-height: 1.12;
   letter-spacing: -3px;
-  margin: 22px 0;
+  margin: var(--space-6) 0;
 }
 .story-content h1 em {
   font-style: normal;
-  color: var(--brand);
+  color: var(--color-brand-700);
 }
 .story-content > p {
-  color: #745d64;
+  color: var(--color-text-muted);
   line-height: 1.8;
-  font-size: 15px;
+  font-size: var(--text-lg);
 }
+/* Ilustración de la tarjeta: sus colores (chip y brillos) y tamaños son propios del dibujo. */
 .card-art {
   height: 270px;
   position: relative;
   max-width: 380px;
-  margin: 20px auto 0;
+  margin: var(--space-5) auto 0;
 }
 .bank-card {
   position: absolute;
@@ -47,12 +48,12 @@
   left: 22px;
   width: 290px;
   height: 176px;
-  background: linear-gradient(125deg, #420f23, #8d2448);
-  border-radius: 15px;
+  background: linear-gradient(125deg, var(--color-brand-900), var(--color-brand-600));
+  border-radius: var(--radius-lg);
   transform: rotate(-10deg);
-  color: #fff;
-  padding: 21px 25px;
-  box-shadow: 0 24px 30px #63152d28;
+  color: var(--color-text-inverse);
+  padding: var(--space-5) var(--space-6);
+  box-shadow: 0 24px 30px color-mix(in srgb, var(--color-brand-800) 16%, transparent);
   overflow: hidden;
 }
 .bank-card:after {
@@ -70,12 +71,12 @@
 }
 .bank-card > span {
   font-weight: 700;
-  font-size: 23px;
+  font-size: var(--text-3xl);
   letter-spacing: -1px;
 }
 .bank-card p {
-  font-size: 16px;
-  margin-top: 15px;
+  font-size: var(--text-lg);
+  margin-top: var(--space-4);
   letter-spacing: 2px;
 }
 .bank-card small {
@@ -87,7 +88,7 @@
   right: 23px;
   bottom: 19px;
   font-style: italic;
-  font-size: 20px;
+  font-size: var(--text-2xl);
 }
 .chip {
   width: 28px;
@@ -95,153 +96,153 @@
   border: 1px solid #c8b899;
   background: linear-gradient(130deg, #e9d5b4, #baab91);
   border-radius: 5px;
-  margin-top: 14px;
+  margin-top: var(--space-4);
 }
 .art-orbit {
   width: 230px;
   height: 230px;
   position: absolute;
   border-radius: 50%;
-  background: #f0cdd8;
+  background: var(--color-brand-200);
   right: 0;
   top: 7px;
 }
 .float-tag {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: var(--space-2);
   position: absolute;
   right: -5px;
   bottom: 46px;
-  background: #fff9;
-  padding: 13px 18px;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px #7c3f5112;
-  color: #66424d;
-  font-size: 12px;
+  background: color-mix(in srgb, var(--color-surface) 60%, transparent);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 40px color-mix(in srgb, var(--color-brand-700) 7%, transparent);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
   transform: rotate(5deg);
   backdrop-filter: blur(10px);
 }
 .login-story footer {
   display: flex;
   justify-content: space-between;
-  color: #736067;
-  font-size: 11px;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
   margin-top: auto;
-  padding-top: 15px;
-  gap: 15px;
+  padding-top: var(--space-4);
+  gap: var(--space-4);
 }
 .login-form-side {
   display: flex;
   flex-direction: column;
-  padding: 45px 55px 30px;
+  padding: var(--space-11) var(--space-14) var(--space-8);
 }
 .login-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: var(--text-2xs);
   letter-spacing: 1.5px;
   font-weight: 600;
-  color: #64646b;
+  color: var(--color-text-muted);
 }
 .secure {
   display: flex;
   align-items: center;
-  gap: 6px;
-  color: #516a5d;
+  gap: var(--space-2);
+  color: var(--color-success);
   letter-spacing: 0;
-  font-size: 11px;
+  font-size: var(--text-xs);
 }
 .login-form-wrap {
   max-width: 370px;
   width: 100%;
   margin: auto;
-  padding: 60px 0;
+  padding: var(--space-15) 0;
 }
 .login-form-wrap h2 {
-  font-size: 36px;
+  font-size: var(--text-6xl);
   letter-spacing: -1.4px;
-  margin: 12px 0;
+  margin: var(--space-3) 0;
 }
 .login-form-wrap h2 > span {
-  color: var(--brand);
+  color: var(--color-brand-700);
 }
 .login-form-wrap > p {
-  color: var(--muted);
-  margin-bottom: 36px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-9);
 }
 .password-input {
   position: relative;
 }
 .password-input input {
-  padding-right: 50px;
+  padding-right: var(--space-13);
 }
 .password-input button {
   position: absolute;
   right: 8px;
   top: 7px;
-  padding: 8px;
+  padding: var(--space-2);
   background: none;
-  color: #9294a0;
+  color: var(--color-text-subtle);
 }
 .remember {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: var(--space-2);
   width: fit-content;
-  margin: 18px 0 0;
+  margin: var(--space-5) 0 0;
   font-weight: 500;
-  color: var(--muted);
+  color: var(--color-text-muted);
   cursor: pointer;
 }
 .remember input {
   width: 16px;
   height: 16px;
   margin: 0;
-  accent-color: var(--brand);
+  accent-color: var(--color-brand-700);
   cursor: pointer;
 }
 .login-submit {
   width: 100%;
   justify-content: space-between;
-  margin-top: 29px;
+  margin-top: var(--space-7);
   height: 49px;
 }
 .login-bottom {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  color: #64666c;
-  font-size: 11px;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
 }
 @media (min-width: 1500px) {
   .login-story {
-    padding-left: 80px;
-    padding-right: 80px;
+    padding-left: var(--space-20);
+    padding-right: var(--space-20);
   }
 }
 @media (max-width: 1200px) {
   .login-story {
-    padding: 35px;
+    padding: var(--space-9);
   }
   .login-form-side {
-    padding: 35px;
+    padding: var(--space-9);
   }
   .story-content {
-    margin-top: 55px;
+    margin-top: var(--space-14);
   }
   .login-story footer {
-    font-size: 11px;
+    font-size: var(--text-xs);
   }
 }
 @media (max-width: 960px) {
   .login-story {
-    padding: 30px;
+    padding: var(--space-8);
   }
   .story-content h1 {
-    font-size: 45px;
+    font-size: var(--text-7xl);
   }
   .bank-card {
     width: 250px;
@@ -254,10 +255,10 @@
     letter-spacing: 0.6px;
   }
   .login-form-wrap h2 {
-    font-size: 30px;
+    font-size: var(--text-5xl);
   }
   .login-form-wrap > p {
-    font-size: 12px;
+    font-size: var(--text-sm);
   }
   .login-story footer > span {
     display: none;
@@ -268,21 +269,21 @@
     grid-template-columns: 1fr;
   }
   .login-story {
-    padding: 22px 25px;
+    padding: var(--space-6) var(--space-6);
   }
   .login-story .brand {
-    font-size: 26px;
+    font-size: var(--text-4xl);
   }
   .story-content {
-    margin: 25px 0 10px;
+    margin: var(--space-6) 0 var(--space-3);
   }
   .story-content .eyebrow {
-    font-size: 10px;
+    font-size: var(--text-2xs);
   }
   .story-content h1 {
-    font-size: 36px;
+    font-size: var(--text-6xl);
     letter-spacing: -1.6px;
-    margin: 15px 0;
+    margin: var(--space-4) 0;
   }
   .story-content h1 br:first-child {
     display: none;
@@ -293,23 +294,23 @@
     display: none;
   }
   .login-form-side {
-    padding: 24px;
+    padding: var(--space-6);
   }
   .login-top {
-    font-size: 10px;
+    font-size: var(--text-2xs);
   }
   .login-form-wrap {
     max-width: 100%;
-    padding: 35px 0;
+    padding: var(--space-9) 0;
   }
   .login-form-wrap h2 {
-    font-size: 29px;
+    font-size: var(--text-4xl);
   }
   .login-form-wrap > p {
-    margin-bottom: 25px;
+    margin-bottom: var(--space-6);
   }
   .login-bottom {
-    padding: 0 0 7px;
-    font-size: 11px;
+    padding: 0 0 var(--space-2);
+    font-size: var(--text-xs);
   }
 }
