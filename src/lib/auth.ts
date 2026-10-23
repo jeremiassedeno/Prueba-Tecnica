@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 
 const COOKIE = "granabank_session";
-// 15 min sin actividad o 8 h desde el login, lo que ocurra primero.
 const IDLE_TIMEOUT_MS = 15 * 60 * 1000;
 const MAX_SESSION_MS = 8 * 60 * 60 * 1000;
 const RENEW_STEP_MS = 60 * 1000;
@@ -19,7 +18,6 @@ export async function createSession(userId: string) {
   await db().session.create({
     data: { id: tokenHash(token), userId, expiresAt: new Date(now + IDLE_TIMEOUT_MS) },
   });
-  // Sin expires: se borra al cerrar el navegador.
   (await cookies()).set(COOKIE, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

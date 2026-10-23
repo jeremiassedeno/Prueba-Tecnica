@@ -35,7 +35,6 @@
   line-height: 1.8;
   font-size: var(--text-lg);
 }
-/* Ilustración de la tarjeta */
 .card-art {
   height: 270px;
   position: relative;

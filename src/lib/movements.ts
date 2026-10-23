@@ -11,7 +11,6 @@ export type MovementItem = {
   reference: string;
 };
 
-// En la base los montos son BigInt; para mostrarlos alcanza con number.
 export const toMovementItem = (movement: Movement): MovementItem => ({
   id: movement.id,
   amountCents: Number(movement.amountCents),

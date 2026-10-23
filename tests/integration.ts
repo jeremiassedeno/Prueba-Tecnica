@@ -5,7 +5,6 @@ import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 
-// Requiere la app levantada en APP_URL y la base local. Borra sus datos al terminar.
 const origin = new URL(process.env.APP_URL ?? "http://localhost:3000").origin;
 const databaseUrl = process.env.DATABASE_URL ?? "";
 assert.match(
@@ -81,7 +80,6 @@ async function main() {
     const active = await testSession(10 * MINUTE, 5 * MINUTE);
     assert.equal((await page("/inicio", active.cookie)).status, 200);
     assert.ok((await sessionExpiry(active.id)) > Date.now() + 14 * MINUTE);
-    // Tope de 8 h desde el login.
     const longLived = await testSession(8 * 60 * MINUTE - 2 * MINUTE, MINUTE);
     assert.equal((await page("/inicio", longLived.cookie)).status, 200);
     assert.equal(
@@ -149,7 +147,6 @@ async function main() {
     const ownDetail = await detail(own.id);
     assert.equal(ownDetail.status, 200);
     assert.ok((await ownDetail.text()).includes(requestId));
-    // Movimiento de otra cuenta. Con loading.tsx el status queda en 200.
     for (const id of [foreign.id, "no-existe"]) {
       const html = await (await detail(id)).text();
       assert.ok(html.includes("No encontramos este movimiento"), id);
@@ -175,7 +172,6 @@ async function main() {
       ).status,
       400,
     );
-    // Dos débitos simultáneos de $60: solo uno puede usar el saldo de $74,50.
     const concurrent = await Promise.all(
       [1, 2].map(() =>
         post(
@@ -200,7 +196,6 @@ async function main() {
       await prisma.movement.count({ where: { accountId: { in: accounts } } }),
       4,
     );
-    // Supera el máximo de un INTEGER.
     await prisma.account.update({
       where: { id: accounts[1] },
       data: { balanceCents: 2_147_483_000n },

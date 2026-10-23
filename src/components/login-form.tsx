@@ -20,7 +20,6 @@ function saveRememberedEmail(email: string | null) {
   } catch {}
 }
 
-// El email guardado no cambia mientras se está en esta página.
 const subscribe = () => () => {};
 
 export default function LoginForm() {
@@ -57,7 +56,6 @@ export default function LoginForm() {
   }
 
   return (
-    // key: remonta el formulario cuando aparece el email guardado.
     <form key={rememberedEmail} onSubmit={submit}>
       <label htmlFor="email">Email</label>
       <input

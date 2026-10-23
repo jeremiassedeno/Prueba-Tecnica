@@ -47,7 +47,6 @@ export async function POST(request: Request) {
           amountCents: amount,
         },
       });
-      // Un débito condicional evita saldos negativos incluso con solicitudes concurrentes.
       const updated = await tx.account.updateMany({
         where: { id: sender.id, balanceCents: { gte: amount } },
         data: { balanceCents: { decrement: amount } },
@@ -90,7 +89,6 @@ export async function POST(request: Request) {
         { error: "Tu saldo es insuficiente para esta transferencia." },
         { status: 400 },
       );
-    // P2002: requestId repetido.
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002")
       return NextResponse.json(
         {

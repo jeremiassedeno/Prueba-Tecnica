@@ -25,7 +25,6 @@ type MovementType = (typeof TYPES)[number]["value"];
 type Period = (typeof PERIODS)[number];
 
 function escapeCsvCell(value: string) {
-  // Evita que una planilla interprete el contenido como una fórmula.
   const prefix = /^[=+\-@\t\r]/.test(value) ? "'" : "";
   const escapedValue = value.replaceAll('"', '""');
   return `"${prefix}${escapedValue}"`;

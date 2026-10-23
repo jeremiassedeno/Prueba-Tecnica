@@ -10,7 +10,6 @@ export const money = (cents: number) =>
     minimumFractionDigits: 2,
   }).format(cents / 100);
 
-// "23 oct 2026"
 export const date = (value: string | Date) =>
   new Intl.DateTimeFormat(LOCALE, {
     day: "2-digit",
@@ -19,7 +18,6 @@ export const date = (value: string | Date) =>
     timeZone: TIME_ZONE,
   }).format(new Date(value));
 
-// "Viernes, 23 de octubre de 2026, 12:04"
 export const dateTime = (value: string | Date) =>
   capitalize(
     new Intl.DateTimeFormat(LOCALE, {
@@ -29,7 +27,6 @@ export const dateTime = (value: string | Date) =>
     }).format(new Date(value)),
   );
 
-// "23 de octubre"
 export const dayAndMonth = (value: Date) =>
   new Intl.DateTimeFormat(LOCALE, {
     day: "numeric",
@@ -37,7 +34,6 @@ export const dayAndMonth = (value: Date) =>
     timeZone: TIME_ZONE,
   }).format(value);
 
-// "Octubre de 2026"
 export const monthAndYear = (value: Date) =>
   capitalize(
     new Intl.DateTimeFormat(LOCALE, {

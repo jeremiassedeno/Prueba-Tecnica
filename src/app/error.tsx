@@ -21,7 +21,6 @@ export default function ErrorPage({
       <button className="primary" onClick={() => retry()}>
         Reintentar
       </button>
-      {/* Recarga completa: un <Link> a la misma ruta no reinicia el error. */}
       <a href="/inicio">Ir al inicio</a>
     </main>
   );
