@@ -22,43 +22,45 @@ model Session {
   userId    String
   expiresAt DateTime
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId])
   @@index([expiresAt])
 }
 
 model LoginAttempt {
-  key          String   @id
-  count        Int      @default(1)
-  windowStart  DateTime @default(now())
+  key         String   @id
+  count       Int      @default(1)
+  windowStart DateTime @default(now())
 }
 
 model Account {
-  id            String        @id @default(cuid())
-  userId        String        @unique
-  alias         String        @unique
-  number        String        @unique
-  balanceCents  Int           @default(0)
-  user          User          @relation(fields: [userId], references: [id])
-  movements     Movement[]
+  id           String     @id @default(cuid())
+  userId       String     @unique
+  alias        String     @unique
+  number       String     @unique
+  balanceCents BigInt     @default(0)
+  user         User       @relation(fields: [userId], references: [id])
+  movements    Movement[]
 }
 
 model Movement {
-  id                 String   @id @default(cuid())
-  accountId          String
-  amountCents        Int
-  description        String
-  category           String
-  counterparty       String
-  reference          String
-  createdAt          DateTime @default(now())
-  account            Account  @relation(fields: [accountId], references: [id])
+  id           String   @id @default(cuid())
+  accountId    String
+  amountCents  BigInt
+  description  String
+  category     String
+  counterparty String
+  reference    String
+  createdAt    DateTime @default(now())
+  account      Account  @relation(fields: [accountId], references: [id])
+
   @@index([accountId, createdAt])
 }
 
 model Transfer {
-  id           String   @id
-  senderId     String
-  recipientId  String
-  amountCents  Int
-  createdAt    DateTime @default(now())
+  id          String   @id
+  senderId    String
+  recipientId String
+  amountCents BigInt
+  createdAt   DateTime @default(now())
 }

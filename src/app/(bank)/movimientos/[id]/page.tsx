@@ -4,7 +4,7 @@ import { ArrowLeft, CircleCheck } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { dateTime, money } from "@/lib/format";
-import { movementKind } from "@/lib/movements";
+import { movementKind, toMovementItem } from "@/lib/movements";
 
 export default async function MovementDetailPage({
   params,
@@ -14,11 +14,12 @@ export default async function MovementDetailPage({
   const { id } = await params;
   const user = await requireUser();
   // Filtrar por la cuenta de la sesión evita ver movimientos ajenos cambiando la URL.
-  const movement = await db().movement.findFirst({
+  const record = await db().movement.findFirst({
     where: { id, accountId: user.account.id },
   });
-  if (!movement) notFound();
+  if (!record) notFound();
 
+  const movement = toMovementItem(record);
   const kind = movementKind(movement);
   const incoming = movement.amountCents > 0;
   return (

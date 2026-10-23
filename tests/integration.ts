@@ -119,12 +119,12 @@ async function main() {
     assert.equal(
       (await prisma.account.findUniqueOrThrow({ where: { id: accounts[0] } }))
         .balanceCents,
-      7450,
+      7450n,
     );
     assert.equal(
       (await prisma.account.findUniqueOrThrow({ where: { id: accounts[1] } }))
         .balanceCents,
-      2550,
+      2550n,
     );
     assert.equal(await prisma.movement.count({ where: { reference: requestId } }), 2);
     const history = await (
@@ -183,16 +183,36 @@ async function main() {
     assert.equal(
       (await prisma.account.findUniqueOrThrow({ where: { id: accounts[0] } }))
         .balanceCents,
-      1450,
+      1450n,
     );
     const all = await prisma.account.findMany({ where: { id: { in: accounts } } });
     assert.equal(
-      all.reduce((sum, account) => sum + account.balanceCents, 0),
-      10000,
+      all.reduce((sum, account) => sum + account.balanceCents, 0n),
+      10000n,
     );
     assert.equal(
       await prisma.movement.count({ where: { accountId: { in: accounts } } }),
       4,
+    );
+    // Con INTEGER este saldo (más de 2^31 centavos, unos $21,4 millones) desbordaba la columna.
+    await prisma.account.update({
+      where: { id: accounts[1] },
+      data: { balanceCents: 2_147_483_000n },
+    });
+    assert.equal(
+      (
+        await post(
+          "/api/transfers",
+          { ...transfer, requestId: randomUUID(), amount: "10" },
+          cookie,
+        )
+      ).status,
+      200,
+    );
+    assert.equal(
+      (await prisma.account.findUniqueOrThrow({ where: { id: accounts[1] } }))
+        .balanceCents,
+      2_147_484_000n,
     );
     assert.equal((await post("/api/auth/logout", {}, cookie)).status, 200);
     await checkPrivateRoutes(cookie);
@@ -207,7 +227,7 @@ async function main() {
       429,
     );
     console.log(
-      "OK: rutas privadas, login, cookies, origen, transferencia, idempotencia, historial, detalle, saldo insuficiente, concurrencia, conservación de saldo, logout y límite de intentos.",
+      "OK: rutas privadas, login, cookies, origen, transferencia, idempotencia, historial, detalle, saldo insuficiente, montos grandes, concurrencia, conservación de saldo, logout y límite de intentos.",
     );
   } finally {
     await prisma.movement.deleteMany({ where: { accountId: { in: accounts } } });

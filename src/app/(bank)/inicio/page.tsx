@@ -4,6 +4,7 @@ import { requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { startOfMonth } from "@/lib/dates";
 import { dayAndMonth, money, monthAndYear } from "@/lib/format";
+import { toMovementItem } from "@/lib/movements";
 import { Balance, CopyAlias } from "@/components/account-actions";
 import Transfer from "@/components/transfer";
 import MovementList from "@/components/movement-list";
@@ -35,6 +36,9 @@ export default async function Home() {
       _sum: { amountCents: true },
     }),
   ]);
+  const balance = Number(user.account.balanceCents);
+  const monthIncome = Number(income._sum.amountCents ?? 0);
+  const monthExpenses = -Number(expenses._sum.amountCents ?? 0);
   return (
     <main className="page-content">
       <div className="page-heading">
@@ -58,10 +62,10 @@ export default async function Home() {
             </span>
             <span>•• {user.account.number.slice(-4)}</span>
           </div>
-          <Balance value={user.account.balanceCents} />
+          <Balance value={balance} />
           <div className="balance-bottom">
             <CopyAlias value={user.account.alias} />
-            <Transfer balance={user.account.balanceCents} />
+            <Transfer balance={balance} />
           </div>
         </section>
         <section className="month-card">
@@ -75,7 +79,7 @@ export default async function Home() {
             </span>
             <div>
               <small>Ingresos</small>
-              <strong>{money(income._sum.amountCents ?? 0)}</strong>
+              <strong>{money(monthIncome)}</strong>
             </div>
             <span className="stat-line income-line" />
           </div>
@@ -85,7 +89,7 @@ export default async function Home() {
             </span>
             <div>
               <small>Egresos</small>
-              <strong>{money(Math.abs(expenses._sum.amountCents ?? 0))}</strong>
+              <strong>{money(monthExpenses)}</strong>
             </div>
             <span className="stat-line expense-line" />
           </div>
@@ -103,7 +107,7 @@ export default async function Home() {
             </Link>
           </div>
           <MovementList
-            items={recent.map((m) => ({ ...m, createdAt: m.createdAt.toISOString() }))}
+            items={recent.map(toMovementItem)}
             emptyHint="Cuando envíes o recibas dinero, lo vas a ver acá."
           />
         </section>

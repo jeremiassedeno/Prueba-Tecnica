@@ -1,4 +1,5 @@
 import { ArrowDownLeft, ArrowUpRight, RefreshCw } from "lucide-react";
+import type { Movement } from "@/generated/prisma/client";
 
 export type MovementItem = {
   id: string;
@@ -9,6 +10,18 @@ export type MovementItem = {
   createdAt: string;
   reference: string;
 };
+
+// Versión serializable para la interfaz. Los montos se guardan como BigInt y se
+// muestran como number, que es exacto hasta 2^53 centavos (unos $90 billones).
+export const toMovementItem = (movement: Movement): MovementItem => ({
+  id: movement.id,
+  amountCents: Number(movement.amountCents),
+  counterparty: movement.counterparty,
+  description: movement.description,
+  category: movement.category,
+  createdAt: movement.createdAt.toISOString(),
+  reference: movement.reference,
+});
 
 const SUBSCRIPTION_CATEGORIES = ["Suscripciones", "Servicios"];
 
