@@ -2,7 +2,8 @@ import Link from "next/link";
 import { ArrowUpRight, ArrowDownLeft, ArrowRight } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { money } from "@/lib/format";
+import { startOfMonth } from "@/lib/dates";
+import { dayAndMonth, money, monthAndYear } from "@/lib/format";
 import { Balance, CopyAlias } from "@/components/account-actions";
 import Transfer from "@/components/transfer";
 import MovementList from "@/components/movement-list";
@@ -10,10 +11,7 @@ import MovementList from "@/components/movement-list";
 export default async function Home() {
   const user = await requireUser();
   const now = new Date();
-  const argentinaDate = new Date(now.getTime() - 3 * 60 * 60 * 1000);
-  const monthStart = new Date(
-    Date.UTC(argentinaDate.getUTCFullYear(), argentinaDate.getUTCMonth(), 1, 3),
-  );
+  const monthStart = startOfMonth(now);
   const [recent, income, expenses] = await Promise.all([
     db().movement.findMany({
       where: { accountId: user.account.id },
@@ -37,13 +35,6 @@ export default async function Home() {
       _sum: { amountCents: true },
     }),
   ]);
-  const month = new Intl.DateTimeFormat("es-AR", {
-    month: "long",
-    year: "numeric",
-    timeZone: "America/Argentina/Buenos_Aires",
-  }).format(now);
-  // Solo la primera letra: con text-transform: capitalize quedaba "Octubre De 2026".
-  const monthLabel = month.charAt(0).toUpperCase() + month.slice(1);
   return (
     <main className="page-content">
       <div className="page-heading">
@@ -57,13 +48,7 @@ export default async function Home() {
           </h1>
           <p>Un nuevo día para hacer eso que tenés en mente.</p>
         </div>
-        <span className="date-badge">
-          {new Intl.DateTimeFormat("es-AR", {
-            day: "numeric",
-            month: "long",
-            timeZone: "America/Argentina/Buenos_Aires",
-          }).format(now)}
-        </span>
+        <span className="date-badge">{dayAndMonth(now)}</span>
       </div>
       <div className="overview-grid">
         <section className="balance-card">
@@ -82,7 +67,7 @@ export default async function Home() {
         <section className="month-card">
           <div className="card-heading">
             <h2>Tu mes, en números</h2>
-            <span className="month-name">{monthLabel}</span>
+            <span className="month-name">{monthAndYear(now)}</span>
           </div>
           <div className="monthly-stat">
             <span className="movement-icon incoming">
