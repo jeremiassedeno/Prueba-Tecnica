@@ -3,14 +3,12 @@ import { useState, useSyncExternalStore, type SubmitEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Eye, EyeOff, LoaderCircle } from "lucide-react";
 
-// Solo se guarda el email, nunca la contraseña, y únicamente en este navegador.
 const REMEMBERED_EMAIL = "granabank:email";
 
 function readRememberedEmail() {
   try {
     return localStorage.getItem(REMEMBERED_EMAIL) ?? "";
   } catch {
-    // Sin acceso a localStorage (modo privado, cookies bloqueadas): el formulario arranca vacío.
     return "";
   }
 }
@@ -22,12 +20,11 @@ function saveRememberedEmail(email: string | null) {
   } catch {}
 }
 
-// El email guardado solo cambia al iniciar sesión, cuando se sale de esta página.
+// El email guardado no cambia mientras se está en esta página.
 const subscribe = () => () => {};
 
 export default function LoginForm() {
   const router = useRouter();
-  // En el servidor no hay localStorage: el formulario se muestra vacío y se completa al hidratar.
   const rememberedEmail = useSyncExternalStore(subscribe, readRememberedEmail, () => "");
   const [visible, setVisible] = useState(false);
   const [pending, setPending] = useState(false);
@@ -60,7 +57,7 @@ export default function LoginForm() {
   }
 
   return (
-    // La key vuelve a montar el formulario cuando aparece el email guardado tras hidratar.
+    // key: remonta el formulario cuando aparece el email guardado.
     <form key={rememberedEmail} onSubmit={submit}>
       <label htmlFor="email">Email</label>
       <input

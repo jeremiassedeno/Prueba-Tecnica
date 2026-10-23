@@ -5,8 +5,7 @@ import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 
-// Ejecutar con la app local iniciada en APP_URL: npm run test:integration.
-// Crea cuentas exclusivas para esta ejecución y las elimina al terminar.
+// Requiere la app levantada en APP_URL y la base local. Borra sus datos al terminar.
 const origin = new URL(process.env.APP_URL ?? "http://localhost:3000").origin;
 const databaseUrl = process.env.DATABASE_URL ?? "";
 assert.match(
@@ -61,7 +60,6 @@ async function main() {
         assert.equal(response.headers.get("location"), location);
       }
     };
-    // Sesiones creadas directamente en la base, con la antigüedad y el vencimiento indicados.
     const MINUTE = 60_000;
     const testSession = async (startedAgo: number, expiresIn: number) => {
       const token = randomUUID();
@@ -77,15 +75,13 @@ async function main() {
       (await prisma.session.findUniqueOrThrow({ where: { id } })).expiresAt.getTime();
     await checkPrivateRoutes("", "/login");
     await checkPrivateRoutes("granabank_session=invalid-token", "/login?sesion=vencida");
-    // Vencida por inactividad hace un minuto.
     const expired = await testSession(20 * MINUTE, -MINUTE);
     await checkPrivateRoutes(expired.cookie, "/login?sesion=vencida");
     assert.equal((await post("/api/transfers", {}, expired.cookie)).status, 401);
-    // Con actividad, el vencimiento se corre a 15 minutos desde ahora...
     const active = await testSession(10 * MINUTE, 5 * MINUTE);
     assert.equal((await page("/inicio", active.cookie)).status, 200);
     assert.ok((await sessionExpiry(active.id)) > Date.now() + 14 * MINUTE);
-    // ...pero nunca más allá de 8 horas desde el login.
+    // Tope de 8 h desde el login.
     const longLived = await testSession(8 * 60 * MINUTE - 2 * MINUTE, MINUTE);
     assert.equal((await page("/inicio", longLived.cookie)).status, 200);
     assert.equal(
@@ -113,7 +109,6 @@ async function main() {
     const cookieHeader = login.headers.get("set-cookie")!;
     assert.match(cookieHeader, /HttpOnly/i);
     assert.match(cookieHeader, /SameSite=lax/i);
-    // Cookie de sesión: sin vencimiento propio, el navegador la borra al cerrarse.
     assert.doesNotMatch(cookieHeader, /Expires|Max-Age/i);
     const cookie = cookieHeader.split(";")[0];
     for (const path of ["/inicio", "/movimientos"])
@@ -154,9 +149,7 @@ async function main() {
     const ownDetail = await detail(own.id);
     assert.equal(ownDetail.status, 200);
     assert.ok((await ownDetail.text()).includes(requestId));
-    // El movimiento del destinatario no debe ser visible para quien envió el dinero.
-    // Con loading.tsx la respuesta ya empezó a enviarse, así que el status queda en 200
-    // y Next muestra la página de no encontrado.
+    // Movimiento de otra cuenta. Con loading.tsx el status queda en 200.
     for (const id of [foreign.id, "no-existe"]) {
       const html = await (await detail(id)).text();
       assert.ok(html.includes("No encontramos este movimiento"), id);
@@ -207,7 +200,7 @@ async function main() {
       await prisma.movement.count({ where: { accountId: { in: accounts } } }),
       4,
     );
-    // Con INTEGER este saldo (más de 2^31 centavos, unos $21,4 millones) desbordaba la columna.
+    // Supera el máximo de un INTEGER.
     await prisma.account.update({
       where: { id: accounts[1] },
       data: { balanceCents: 2_147_483_000n },
@@ -239,9 +232,7 @@ async function main() {
       (await post("/api/auth/login", { email: emails[0], password })).status,
       429,
     );
-    console.log(
-      "OK: rutas privadas, vencimiento de sesión, login, cookies, origen, transferencia, idempotencia, historial, detalle, saldo insuficiente, montos grandes, concurrencia, conservación de saldo, logout y límite de intentos.",
-    );
+    console.log("Pruebas de integración OK");
   } finally {
     await prisma.movement.deleteMany({ where: { accountId: { in: accounts } } });
     await prisma.transfer.deleteMany({ where: { senderId: { in: accounts } } });

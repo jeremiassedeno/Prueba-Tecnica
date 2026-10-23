@@ -90,7 +90,7 @@ export async function POST(request: Request) {
         { error: "Tu saldo es insuficiente para esta transferencia." },
         { status: 400 },
       );
-    // P2002: ya existe una transferencia con este requestId.
+    // P2002: requestId repetido.
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002")
       return NextResponse.json(
         {

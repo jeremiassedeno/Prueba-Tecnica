@@ -11,8 +11,7 @@ export type MovementItem = {
   reference: string;
 };
 
-// Versión serializable para la interfaz. Los montos se guardan como BigInt y se
-// muestran como number, que es exacto hasta 2^53 centavos (unos $90 billones).
+// En la base los montos son BigInt; para mostrarlos alcanza con number.
 export const toMovementItem = (movement: Movement): MovementItem => ({
   id: movement.id,
   amountCents: Number(movement.amountCents),

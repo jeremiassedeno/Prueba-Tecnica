@@ -41,7 +41,6 @@ export default function MovementHistory({ items }: { items: MovementItem[] }) {
   const [page, setPage] = useState(1);
 
   function choosePeriod({ value, days }: Period) {
-    // La fecha de corte se fija al elegir el período, no en cada render.
     setPeriod({
       value,
       since: days === null ? null : Date.now() - days * MILLISECONDS_PER_DAY,
@@ -67,7 +66,6 @@ export default function MovementHistory({ items }: { items: MovementItem[] }) {
   }, [items, query, type, period.since]);
 
   const totalPages = Math.max(1, Math.ceil(filteredMovements.length / PAGE_SIZE));
-  // Tras una transferencia la lista se recarga y la página actual puede quedar fuera de rango.
   const currentPage = Math.min(page, totalPages);
   const pageItems = filteredMovements.slice(
     (currentPage - 1) * PAGE_SIZE,

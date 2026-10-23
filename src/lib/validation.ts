@@ -6,7 +6,6 @@ export const loginSchema = z.object({
     .transform((v) => v.toLowerCase()),
   password: z.string().min(1).max(128),
 });
-// La API muestra al usuario el primer mensaje, por eso cada regla define el suyo.
 export const transferSchema = z.object(
   {
     recipient: z

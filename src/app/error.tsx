@@ -9,7 +9,6 @@ export default function ErrorPage({
   retry: () => void;
 }) {
   useEffect(() => {
-    // El detalle técnico queda en la consola; al usuario se le muestra un mensaje claro.
     console.error(error);
   }, [error]);
   return (
@@ -22,8 +21,7 @@ export default function ErrorPage({
       <button className="primary" onClick={() => retry()}>
         Reintentar
       </button>
-      {/* Navegación completa a propósito: con <Link>, si el error ocurrió en /inicio la ruta
-          no cambia y Next no reinicia esta pantalla aunque el servidor ya responda bien. */}
+      {/* Recarga completa: un <Link> a la misma ruta no reinicia el error. */}
       <a href="/inicio">Ir al inicio</a>
     </main>
   );

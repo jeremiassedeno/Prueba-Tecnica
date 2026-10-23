@@ -110,7 +110,6 @@ async function main() {
       console.log(`La cuenta ${user.email} ya existe; se conserva su información.`);
       continue;
     }
-    // El saldo inicial compensa el historial para que la suma de movimientos dé el saldo.
     const net = movements.reduce((sum, m) => sum + m.amountCents, 0);
     await prisma.user.create({
       data: {

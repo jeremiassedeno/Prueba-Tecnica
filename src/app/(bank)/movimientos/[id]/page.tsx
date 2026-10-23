@@ -13,7 +13,6 @@ export default async function MovementDetailPage({
 }) {
   const { id } = await params;
   const user = await requireUser();
-  // Filtrar por la cuenta de la sesión evita ver movimientos ajenos cambiando la URL.
   const record = await db().movement.findFirst({
     where: { id, accountId: user.account.id },
   });

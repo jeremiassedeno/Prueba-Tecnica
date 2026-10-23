@@ -1,5 +1,5 @@
 :root {
-  /* Granate de la marca, de más claro a más oscuro */
+  /* Marca */
   --color-brand-50: #fbf4f6;
   --color-brand-100: #f4e7ec;
   --color-brand-200: #ecd6de;
@@ -11,7 +11,7 @@
   --color-brand-800: #571029;
   --color-brand-900: #420f23;
 
-  /* Texto, superficies y bordes. text-muted cumple 4,5:1 hasta sobre brand-200. */
+  /* Texto, superficies y bordes */
   --color-text: #30232a;
   --color-text-muted: #685d63;
   --color-text-subtle: #857f86;
@@ -50,7 +50,7 @@
   --text-amount: clamp(28px, 2.8vw, 40px);
   --text-display: clamp(40px, 4.2vw, 66px);
 
-  /* Espaciado: múltiplos de 4px */
+  /* Espaciado */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -62,13 +62,12 @@
   --space-9: 36px;
   --space-10: 40px;
   --space-11: 44px;
-  --space-13: 52px;
+  --space-12: 48px;
   --space-14: 56px;
-  --space-15: 60px;
   --space-16: 64px;
   --space-20: 80px;
 
-  /* Bordes redondeados */
+  /* Radios */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 14px;

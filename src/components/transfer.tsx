@@ -33,7 +33,7 @@ export default function Transfer({ balance }: { balance: number }) {
         body: JSON.stringify({ ...values, requestId: requestId.current }),
       });
       const data = await response.json();
-      // Sesión vencida: al refrescar, el servidor redirige al login con el aviso.
+      // Sesión vencida: el refresh redirige al login.
       if (response.status === 401) router.refresh();
       if (!response.ok) throw new Error(data.error);
       setSuccess({

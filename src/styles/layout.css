@@ -185,7 +185,6 @@
   margin-left: var(--space-2);
   font-weight: 400;
 }
-/* Solo el subtítulo: el diálogo de transferencia también se dibuja dentro de .page-heading. */
 .page-heading > div > p {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
@@ -256,7 +255,7 @@
 }
 @media (min-width: 1500px) {
   .page-content {
-    padding-top: var(--space-13);
+    padding-top: var(--space-12);
   }
 }
 @media (max-width: 1200px) {
